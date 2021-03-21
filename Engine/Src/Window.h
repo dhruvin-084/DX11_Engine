@@ -1,16 +1,27 @@
 #pragma once
 
 #include<Windows.h>
+#include<functional>
+
+#include"Events/Event.h"
 
 class Window {
 public:
 	Window(int _width, int _height, const char* name);
 	~Window();
 
+	inline void SetEventCallback(const std::function<void(Event&)>& callback) { winData.EventCallback = callback; };
+
 private:
 	int width;
 	int height;
 	HWND hWnd;
+	
+	struct windowData {
+		std::function<void(Event&)> EventCallback;
+	};
+
+	windowData winData;
 
 
 private:

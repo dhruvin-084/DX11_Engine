@@ -1,6 +1,5 @@
 #include"Window.h"
 
-
 Window::Window(int _width, int _height, const char* name) :
 	width(_width), height(_height) {
 
@@ -18,6 +17,7 @@ Window::Window(int _width, int _height, const char* name) :
 		wr.right - wr.left, wr.bottom - wr.top,
 		nullptr, nullptr, WindowClass::GetInstance(), this
 	);
+	SetWindowLongPtrA(hWnd, GWLP_USERDATA, (LONG_PTR)&winData);
 
 
 	// show window
@@ -28,15 +28,9 @@ Window::~Window() {
 	DestroyWindow(hWnd);
 }
 
-LRESULT CALLBACK HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
-	switch (msg) {
-	case WM_CLOSE:
-		PostQuitMessage(0);
-		return 0;
-	}
-	return DefWindowProc(hWnd, msg, wParam, lParam);
-}
 
+// implemented in Src/MessasgeHndler.cpp
+LRESULT CALLBACK HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 Window::WindowClass Window::WindowClass::wndClass;
 

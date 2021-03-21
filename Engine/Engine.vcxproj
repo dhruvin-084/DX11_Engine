@@ -152,10 +152,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Src\MessageHandler.cpp" />
     <ClCompile Include="Src\Window.cpp" />
     <ClCompile Include="Src\WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Events\Event.h" />
+    <ClInclude Include="Src\Events\KeyboardEvents.h" />
     <ClInclude Include="Src\Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
