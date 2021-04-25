@@ -29,11 +29,30 @@ Window::Window(int _width, int _height, const char* name) :
 
 	// show window
 	ShowWindow(hWnd, SW_SHOW);
+
+	// Event handaling
+	SetEventCallback([this](Event& e) {
+		EventDispatcher dispatcher(e);
+
+		dispatcher.Dispatch<KeyPressedEvent>([this](KeyPressedEvent& e) {
+			this->keyboard.OnKeyPressed(e);
+			return true;
+		});
+		dispatcher.Dispatch<KeyReleasedEvent>([this](KeyReleasedEvent& e) {
+			this->keyboard.OnKeyRelesed(e);
+			return true;
+		});
+		dispatcher.Dispatch<KeyCharEvent>([this](KeyCharEvent& e) {
+			this->keyboard.OnChar(e.GetKeyCode());
+			return true;
+		});
+	});
 }
 
 Window::~Window() {
 	DestroyWindow(hWnd);
 }
+
 
 
 // implemented in Src/MessasgeHndler.cpp

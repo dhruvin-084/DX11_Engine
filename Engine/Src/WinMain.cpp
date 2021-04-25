@@ -20,15 +20,23 @@ void HandleKeyBoardEvents(Event& e) {
 int main() {
 	try {
 		Window wnd(640, 480, "DX11 Engine");
-		wnd.SetEventCallback(HandleKeyBoardEvents);
+		//wnd.SetEventCallback(HandleKeyBoardEvents);
 
 		// message pump
 		MSG msg;
-		while (GetMessage(&msg, nullptr, 0, 0) > 0) {
+		bool gResult;
+		while (gResult = GetMessage(&msg, nullptr, 0, 0) > 0) {
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 
+			if (wnd.keyboard.KeyIsPressed(VK_SPACE)) {
+				std::cout << "Space" << std::endl;
+			}
 		}
+		if (gResult == -1) {
+			return -1;
+		}
+		return msg.wParam;
 	}
 	catch(Exception& e) {
 		MessageBox(nullptr, e.what(), e.GetType(), MB_OK | MB_ICONEXCLAMATION);
@@ -40,8 +48,6 @@ int main() {
 		MessageBox(nullptr, "No information available", "Unknown Exception", MB_OK | MB_ICONEXCLAMATION);
 	}
 
-
-
-	return 0;
+	return -1;
 }
 

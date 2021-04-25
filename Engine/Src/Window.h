@@ -5,6 +5,7 @@
 
 #include"Events/Event.h"
 #include"Execption.h"
+#include"Keyboard.h"
 
 class Window {
 public:
@@ -12,8 +13,10 @@ public:
 	~Window();
 	Window(const Window&) = delete;
 	Window operator=(const Window&) = delete;
+	Keyboard keyboard;
 
 	inline void SetEventCallback(const std::function<void(Event&)>& callback) { winData.EventCallback = callback; };
+
 
 	class WindowExcetion : public Exception {
 	public:

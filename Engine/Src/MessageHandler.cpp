@@ -20,6 +20,12 @@ LRESULT CALLBACK HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 		winData->EventCallback(e);
 		break;
 	}
+	case WM_KEYUP:
+	{
+		KeyReleasedEvent e(wParam);
+		winData->EventCallback(e);
+		break;
+	}
 
 	case WM_CLOSE:
 		PostQuitMessage(0);

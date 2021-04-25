@@ -21,6 +21,7 @@ public:
 	static EventType GetStaticType() { return EventType::KeyPressed; }
 	virtual EventType GetEventType() override { return GetStaticType(); }
 	virtual const char* GetEventName() override { return "KeyPressed"; }
+	int GetRepeatcount() const { return m_RepeatCount; }
 	virtual std::string ToString() override {
 		std::stringstream ss;
 		ss << "KeyPressedEvent: " << m_KeyCode << "(" << m_RepeatCount << " repeats)";
