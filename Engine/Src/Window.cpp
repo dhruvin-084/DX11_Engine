@@ -26,27 +26,11 @@ Window::Window(int _width, int _height, const char* name) :
 	// set winData as window's user data
 	SetWindowLongPtrA(hWnd, GWLP_USERDATA, (LONG_PTR)&winData);
 
-
 	// show window
 	ShowWindow(hWnd, SW_SHOW);
 
-	// Event handaling
-	SetEventCallback([this](Event& e) {
-		EventDispatcher dispatcher(e);
-
-		dispatcher.Dispatch<KeyPressedEvent>([this](KeyPressedEvent& e) {
-			this->keyboard.OnKeyPressed(e);
-			return true;
-		});
-		dispatcher.Dispatch<KeyReleasedEvent>([this](KeyReleasedEvent& e) {
-			this->keyboard.OnKeyRelesed(e);
-			return true;
-		});
-		dispatcher.Dispatch<KeyCharEvent>([this](KeyCharEvent& e) {
-			this->keyboard.OnChar(e.GetKeyCode());
-			return true;
-		});
-	});
+	// initialize graphics
+	pGfx = std::make_unique<Graphics>(hWnd);
 }
 
 Window::~Window() {
@@ -136,4 +120,24 @@ HRESULT Window::WindowExcetion::GetErrorCode() const noexcept
 std::string Window::WindowExcetion::GetErrorString() const noexcept
 {
 	return TranslateErrorCode(hr);
+}
+
+std::optional<int> Window::ProcessMessages()
+{
+	MSG msg;
+	while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
+		if (msg.message == WM_QUIT) {
+			return (int)msg.wParam;
+		}
+
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+
+	return {};
+}
+
+Graphics& Window::Gfx()
+{
+	return *pGfx;
 }

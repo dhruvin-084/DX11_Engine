@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -156,16 +156,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Application.cpp" />
     <ClCompile Include="Src\Execption.cpp" />
+    <ClCompile Include="Src\Graphics.cpp" />
     <ClCompile Include="Src\Keyboard.cpp" />
     <ClCompile Include="Src\MessageHandler.cpp" />
     <ClCompile Include="Src\Window.cpp" />
     <ClCompile Include="Src\WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\Application.h" />
     <ClInclude Include="Src\Events\Event.h" />
     <ClInclude Include="Src\Events\KeyboardEvents.h" />
     <ClInclude Include="Src\Execption.h" />
+    <ClInclude Include="Src\Graphics.h" />
     <ClInclude Include="Src\Keyboard.h" />
     <ClInclude Include="Src\Window.h" />
   </ItemGroup>

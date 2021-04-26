@@ -2,10 +2,13 @@
 
 #include<Windows.h>
 #include<functional>
+#include<optional>
+#include<memory>
 
 #include"Events/Event.h"
 #include"Execption.h"
 #include"Keyboard.h"
+#include"Graphics.h"
 
 class Window {
 public:
@@ -13,10 +16,10 @@ public:
 	~Window();
 	Window(const Window&) = delete;
 	Window operator=(const Window&) = delete;
-	Keyboard keyboard;
 
 	inline void SetEventCallback(const std::function<void(Event&)>& callback) { winData.EventCallback = callback; };
-
+	static std::optional<int> ProcessMessages();
+	Graphics& Gfx();
 
 	class WindowExcetion : public Exception {
 	public:
@@ -26,6 +29,8 @@ public:
 		static std::string TranslateErrorCode(HRESULT hr) noexcept;
 		HRESULT GetErrorCode() const noexcept;
 		std::string GetErrorString() const noexcept;
+
+
 	private:
 		HRESULT hr;
 	};
@@ -34,7 +39,8 @@ private:
 	int width;
 	int height;
 	HWND hWnd;
-	
+	std::unique_ptr<Graphics> pGfx;
+
 	struct windowData {
 		std::function<void(Event&)> EventCallback;
 	};

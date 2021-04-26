@@ -10,7 +10,7 @@
 
 
 class Keyboard {
-	friend class Window;
+	friend class Application;
 public:
 	Keyboard() = default;
 	Keyboard(const Keyboard&) = delete;
