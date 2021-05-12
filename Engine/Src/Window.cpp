@@ -1,6 +1,5 @@
 #include"Window.h"
-
-#include<sstream>
+#include"Exceptions/WindowException.h"
 
 Window::Window(int _width, int _height, const char* name) :
 	width(_width), height(_height) {
@@ -76,51 +75,7 @@ const char* Window::WindowClass::GetName() {
 	return wndClassName;
 }
 
-Window::WindowExcetion::WindowExcetion(int line, const char* file, HRESULT hr) noexcept
-	: Exception(line, file), hr(hr)
-{}
 
-const char* Window::WindowExcetion::what() const noexcept
-{
-	std::ostringstream oss;
-	oss << "[Error Code] " << GetErrorCode() << std::endl
-		<< "[Description] " << GetErrorString() << std::endl
-		<< GetOriginString();
-	whatBuffer = oss.str();
-	return whatBuffer.c_str();
-}
-
-const char* Window::WindowExcetion::GetType() const noexcept
-{
-	return "Window Excetion";
-}
-
-std::string Window::WindowExcetion::TranslateErrorCode(HRESULT hr) noexcept
-{
-	char* pMsgBuf = nullptr;
-	DWORD nMsgLen = FormatMessage(
-		FORMAT_MESSAGE_ALLOCATE_BUFFER |
-		FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-		nullptr, hr, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-		reinterpret_cast<LPSTR>(&pMsgBuf), 0, nullptr
-	);
-	if (nMsgLen == 0) {
-		return "Unidentified error code";
-	}
-	std::string errorString = pMsgBuf;
-	LocalFree(pMsgBuf);
-	return errorString;
-}
-
-HRESULT Window::WindowExcetion::GetErrorCode() const noexcept
-{
-	return hr;
-}
-
-std::string Window::WindowExcetion::GetErrorString() const noexcept
-{
-	return TranslateErrorCode(hr);
-}
 
 std::optional<int> Window::ProcessMessages()
 {
@@ -135,6 +90,12 @@ std::optional<int> Window::ProcessMessages()
 	}
 
 	return {};
+}
+
+void Window::SetWindowTitle(const char* title)
+{
+	if(!SetWindowText(hWnd, title))
+		throw WND_LAST_EXCEPT();
 }
 
 Graphics& Window::Gfx()

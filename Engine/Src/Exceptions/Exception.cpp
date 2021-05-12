@@ -1,5 +1,8 @@
-#include"Execption.h"
+#include"Exception.h"
 #include<sstream>
+#include<Windows.h>
+
+
 Exception::Exception(int line, const char* file) noexcept
 	: line(line), file(file) {}
 

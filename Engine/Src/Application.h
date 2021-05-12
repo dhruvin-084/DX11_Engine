@@ -2,6 +2,7 @@
 
 #include"Window.h"
 #include"Keyboard.h"
+#include"Timer.h"
 
 class Application {
 public:
@@ -11,4 +12,5 @@ public:
 private:
 	Window wnd;
 	Keyboard keyboard;
+	Timer timer;
 };

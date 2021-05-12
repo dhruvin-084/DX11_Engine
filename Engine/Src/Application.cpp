@@ -1,5 +1,4 @@
 #include "Application.h"
-
 #include<iostream>
 
 Application::Application()
@@ -42,6 +41,8 @@ int Application::Start()
 
 void Application::Update()
 {
+
 	wnd.Gfx().ClearBuffer(0.5f, 0.5f, 1.0f);
+	wnd.Gfx().DrawTestTriangle();
 	wnd.Gfx().EndFrame();
 }

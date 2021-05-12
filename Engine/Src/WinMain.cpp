@@ -3,7 +3,7 @@
 #include<iostream>
 
 #include"Application.h"
-#include"Execption.h"
+#include"Exceptions/Exception.h"
 
 #include"Events/Event.h"
 #include"Events/KeyboardEvents.h"
